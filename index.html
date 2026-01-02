@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Losowanie zdjęcia</title>
+  <style>
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      margin: 0;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      background: #f5f6f7;
+      color: #111;
+    }
+    .wrap {
+      width: min(720px, 100%);
+      display: grid;
+      gap: 16px;
+      justify-items: center;
+    }
+    img {
+      width: 100%;
+      height: auto;
+      max-height: 70vh;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    }
+    button {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 18px;
+      border: 0;
+      border-radius: 14px;
+      background: #111;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0,0,0,.15);
+    }
+    button:active { transform: translateY(1px); }
+    .hint {
+      font-size: 14px;
+      opacity: .75;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <img id="photo" alt="Wylosowane zdjęcie" />
+    <button id="btn">Losuj</button>
+    <div class="hint">Kliknij „Losuj”, aby wylosować zdjęcie.</div>
+  </div>
+
+  <script>
+    // 1) TU wpisujesz listę plików ze zdjęciami.
+    //    Dopisz tyle, ile masz (40+).
+    const images = [
+  "img/1.png",
+  "img/2.png",
+  "img/3.jpeg",
+  "img/4.jpg",
+  "img/5.png",
+  "img/6.png",
+  "img/7.jpg",
+  "img/8.jpg",
+  "img/9.png",
+  "img/10.png",
+  "img/11.png",
+  "img/12.png",
+  "img/13.png",
+  "img/14.png",
+  "img/15.png",
+  "img/16.jpeg",
+  "img/17.png",
+  "img/18.jpg",
+  "img/19.png",
+  "img/20.jpg",
+];
+
+    const imgEl = document.getElementById("photo");
+    const btn = document.getElementById("btn");
+
+    function pickRandom() {
+      if (!images.length) {
+        imgEl.alt = "Brak zdjęć na liście.";
+        return;
+      }
+      const i = Math.floor(Math.random() * images.length);
+      // cache-buster, żeby telefon nie pokazywał starego obrazka z pamięci
+      imgEl.src = images[i] + "?v=" + Date.now();
+    }
+
+    btn.addEventListener("click", pickRandom);
+
+    // Na start od razu losuje pierwsze zdjęcie
+    pickRandom();
+  </script>
+</body>
+</html>
